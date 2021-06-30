@@ -1,0 +1,18 @@
+{
+  "name": "detroit-cuisine-ratings",
+  "version": "0.1.0",
+  "dependencies": {
+    "@types/node": "^15.12.5",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.1",
+    "graphql-request": "^3.4.0",
+    "node": "^16.4.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json --outDir ./built",
+    "start": "yarn build && node built/detroitCuisineRatings.js",
+    "prettier": "prettier --config .prettierrc '**/*.ts*' --write"
+  }
+}
