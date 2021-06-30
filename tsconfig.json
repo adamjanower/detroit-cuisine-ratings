@@ -4,5 +4,11 @@
       "lib": ["es6", "DOM"],
       "module": "commonjs",
       "outDir": "./built",
-    }
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
 }
