@@ -20,11 +20,13 @@ export class PostgresConnect {
     }
 
     /**
-     * Copies a CSV into the business_category_ratings table.
+     * Truncates the business_category_ratings table and then copies a CSV into it.
      */
     async copyFileIntoBusinessesTable(relativeFilename: string, columns: string) {
         try {
-            console.log('Starting copy');
+            await this.client.query('truncate business_category_ratings;');
+
+            console.log('Truncated table. Starting copy to database.');
             const res = await this.client.query(
                 `COPY business_category_ratings(${columns}) FROM '${relativeFilename}' with CSV;`
             );
@@ -40,7 +42,7 @@ export class PostgresConnect {
     async getDetroitReport(): Promise<ReportRow[]> {
         try {
             const res = await this.client.query(
-                'SELECT category, count(*) as total_businesses, avg(rating) as average_rating from business_category_ratings group by 1 order by 3 desc, 2 desc;'
+                'SELECT category, count(*) as total_businesses, avg(rating) as average_rating from business_category_ratings group by 1 order by 3 desc, 2 desc, 1;'
             );
             return res.rows;
         } catch (e) {

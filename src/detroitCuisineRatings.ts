@@ -32,6 +32,7 @@ class DetroitCuisineRatings {
 
     /**
      * This function uses the yelpDataRetriever to pull data about Detroit businesses from Yelp.
+     * NOTE: There is some bug once the offset gets to 1000. I have not found it on my side and am interested if it's in Yelp's API.
      */
     private async retriveYelpData() {
         // TODO: Move this number to config.
