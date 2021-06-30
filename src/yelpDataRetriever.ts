@@ -31,6 +31,11 @@ export class YelpDataRetriever {
         });
     }
 
+    /**
+     * This function asks Yelp for 50 business from Detroit, their name, categories, and ratings.
+     * @param offset The number of results to 'skip' when asking Yelp for more businesses.
+     * @returns Business[], max length of 50.
+     */
     async getDetroitBusinesses(offset: number = 0): Promise<Business[]> {
         const variables = ` { "offset": ${offset} } `;
         try {
@@ -59,5 +64,3 @@ export class YelpDataRetriever {
         }
     `;
 }
-
-new YelpDataRetriever().getDetroitBusinesses().catch((error) => console.error(error));

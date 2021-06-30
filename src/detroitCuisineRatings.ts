@@ -15,7 +15,6 @@ class DetroitCuisineRatings {
         this.yelpDataRetriever = new YelpDataRetriever();
         this.postresConnect = new PostgresConnect();
         this.filename = Date.now() + '_detroit_businesses.csv';
-        //this.filename = '1625076202187_detroit_businesses.csv';
         this.filepath = __dirname + '/../data/';
         this.relativeFileName = this.filepath + this.filename;
         this.offset = 0;
