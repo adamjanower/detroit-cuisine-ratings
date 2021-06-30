@@ -10,7 +10,7 @@ export type BusinessList = {
 export type Business = {
     name: String;
     rating: number;
-    categories: { title: string; alias: string };
+    categories: { title: string; alias: string }[];
 };
 
 /**
@@ -24,7 +24,6 @@ export class YelpDataRetriever {
     constructor() {
         // TODO: More robust config handling. Move to encapsulated class.
         dotenv.config();
-        // TODO: Hide the API key in ENV VAR or some secret key manager.
         this.graphQLClient = new GraphQLClient(this.yelpGraphQLEndpoint, {
             headers: {
                 authorization: `Bearer ${process.env.YELP_API_KEY}`
@@ -34,9 +33,15 @@ export class YelpDataRetriever {
 
     async getDetroitBusinesses(offset: number = 0): Promise<Business[]> {
         const variables = ` { "offset": ${offset} } `;
-        const data = await this.graphQLClient.request(this.ALL_DETROIT_BUSINESSES, variables);
-        console.log(JSON.stringify(data, undefined, 2));
-        return data.search.business;
+        try {
+            const data = await this.graphQLClient.request(this.ALL_DETROIT_BUSINESSES, variables);
+            console.log(`Retrieved ${data.search.business.length} businesses.`);
+            return data.search.business;
+        } catch (e) {
+            // TODO: I don't love this error handling. Is there a simpler way to catch this promise failure? Would then/catch be better?
+            console.log(`Error retrieving batch of data. Offset: ${offset}, Error: ${e}`);
+            return [];
+        }
     }
 
     ALL_DETROIT_BUSINESSES: string = gql`
